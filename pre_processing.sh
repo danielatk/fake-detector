@@ -1,8 +1,8 @@
 #!/bin/bash
 
-path_dataset="" #modifique isso para o caminho onde está o diretório /op_spam_v1.4/ (ex: "/home/user/Documents/op_spam_v1.4/"
+path_dataset="" #modifique isso para o caminho onde está o diretório /fake-detector/ (ex: "/home/user/Documents/fake-detector/"
 
-path_code="" #modifique isso para o caminho onde está o diretório que contém os arquivos pre_processing.c, stem.c, feature_extraction.py e stopwords.txt. O documento que guarda o vocabulário também será gerado nesse diretório
+path_code="" #modifique isso para o caminho onde está o diretório que contém os arquivos a serem executadas (por default é o mesmo que path_dataset)
 
 stopwords=$path_code"stopwords.txt"
 vocabulario=$path_code"vocabulario.txt"
