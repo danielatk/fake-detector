@@ -5,19 +5,19 @@ Os diretórios "negative_polarity" e "positive_polarity" contém, cada um, 800 a
 O projeto ainda está incompleto.
 
 O que já foi feito:
--segmentação de frases (pre_processing.c, função escrita em c)
--transformação de todos os caracteres para lowercase (pre_processing.c, função escrita em c)
--tokenização (pre_processing.c, função escrita em c)
--retirada de stopwords (pre_processing.c, função escrita em c)
--criação de n-gramas (pre_processing.c, função, para qualquer valor de n, em c)
--stemming (stem.c, código usado: https://tartarus.org/martin/PorterStemmer/c.txt)
--definição do vocabulário em n-gramas (feature_extraction.py, função escrita em python usando a biblioteca sklearn)
--script para executar os códigos, recebendo como entrada todas as avaliações
+-segmentação de frases (pre_processing.c, função escrita em c) <br />
+-transformação de todos os caracteres para lowercase (pre_processing.c, função escrita em c) <br />
+-tokenização (pre_processing.c, função escrita em c) <br />
+-retirada de stopwords (pre_processing.c, função escrita em c) <br />
+-criação de n-gramas (pre_processing.c, função, para qualquer valor de n, em c) <br />
+-stemming (stem.c, código usado: https://tartarus.org/martin/PorterStemmer/c.txt) <br />
+-definição do vocabulário em n-gramas (feature_extraction.py, função escrita em python usando a biblioteca sklearn) <br />
+-script para executar os códigos, recebendo como entrada todas as avaliações <br />
 
 O que falta fazer:
--contagem da quantidade de cada termo nos documentos
--análise dos tipos de termo que mais aparecem nas avaliações falsas e verdadeiras (por isso a presença dos arquivos "adjectives.txt", "adverbs.txt", "function_words.txt", "verb_and_noun,txt" e "verbs.txt")
--extração dos atributos tf-idf com uso da biblioteca sklearn
--fazer 5-fold cross-validation
--usar classificador SVM
+-contagem da quantidade de cada termo nos documentos <br />
+-análise dos tipos de termo que mais aparecem nas avaliações falsas e verdadeiras (por isso a presença dos arquivos "adjectives.txt", "adverbs.txt", "function_words.txt", "verb_and_noun,txt" e "verbs.txt") <br />
+-extração dos atributos tf-idf com uso da biblioteca sklearn <br />
+-fazer 5-fold cross-validation <br />
+-usar classificador SVM <br />
 -analisar resultados
