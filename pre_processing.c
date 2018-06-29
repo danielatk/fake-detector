@@ -106,18 +106,6 @@ void segmentaFrases(){ //segmenta frases em linhas diferentes
           continue;
         }
       }
-      if(aspas){
-        if(aux[i] == ' '){
-          espaco = 1;
-        }
-        aspas = 0;
-        if(i == (strlen(aux) - 1)){
-          break;
-        }
-        else{
-          continue;
-        }
-      }
       if(espaco){
         if(isupper(aux[i])){
           fputs("\n", arq_saida);
