@@ -5,7 +5,7 @@
 
 #define N 2 //define n-grama
 
-struct t_stopwords{ //struct para guardar as stopwords, quantidade de stopwords e stopword com maior tamanho
+struct t_stopwords{ //struct para guardar as stopwords, quantidade de stopwords e stopword com maior tamanho 
   int qtd;
   int maior;
   char** list;
