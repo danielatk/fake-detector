@@ -3,7 +3,7 @@
 #include <string.h>
 #include <ctype.h>
 
-struct t_listas{ //struct para guardar as listas de palavras funcionais, advérbios, etc
+struct t_listas{ //struct para guardar as listas de palavras funcionais, advérbios, etc 
   char** f_words_list;
   char** adjectives_list;
   char** adverbs_list;
