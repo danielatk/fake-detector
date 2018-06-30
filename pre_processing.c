@@ -3,7 +3,7 @@
 #include <string.h>
 #include <ctype.h>
 
-#define N 1 //define n-grama
+#define N 2 //define n-grama
 
 struct t_stopwords{ //struct para guardar as stopwords, quantidade de stopwords e stopword com maior tamanho
   int qtd;
@@ -458,7 +458,7 @@ int main(int argc, char *argv[]){
     tokeniza();
     retiraEspacoAMais();
     qtd_palavras = contaQtdPalavras();
-    //retiraStopwords();
+    retiraStopwords();
     criaNGrama();
   }
   return 0;
