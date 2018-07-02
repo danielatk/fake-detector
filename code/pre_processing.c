@@ -3,8 +3,6 @@
 #include <string.h>
 #include <ctype.h>
 
-#define N 2 //define n-grama
-
 struct t_stopwords{ //struct para guardar as stopwords, quantidade de stopwords e stopword com maior tamanho 
   int qtd;
   int maior;
@@ -509,7 +507,7 @@ void retiraStopwords(){
   fclose(arq_saida);
 }
 
-void criaNGrama(){
+void criaNGrama(int n){
   review = fopen(nome_review, "r");
   FILE* arq_saida;
   char* nome_arq_saida;
@@ -545,20 +543,20 @@ void criaNGrama(){
   char aux[300];
   char* n_gram; //irá guardar N palavras
   int cont; //conta quantas palavras foram lidas
-  int inicio[N+1];
+  int inicio[n+1];
   int tam;
   int i;
   int alocado = 0; //flag para indicar se n_gram já teve espaço alocado ou não
   while(fgets(aux, 300, review)!=NULL){
     cont = 0;
-    for(i=0; i<N+1; i++){
+    for(i=0; i<n+1; i++){
       inicio[i] = 0;
     }
     for(i = 0; i < strlen(aux); i++){
       if(aux[i] == ' '){
         cont++;
         inicio[cont] = i + 1;
-        if(cont == N){
+        if(cont == n){
           cont --;
           tam = i - inicio[0];
           n_gram = (char*)malloc(tam + 1);
@@ -574,7 +572,7 @@ void criaNGrama(){
       if(aux[i] ==  '\n'){
         cont++;
         inicio[cont] = i + 1;
-        if(cont == N){
+        if(cont == n){
           tam = i - inicio[0];
           n_gram = (char*)malloc(tam + 1);
           for(j = 0; j < tam; j++){
@@ -588,7 +586,7 @@ void criaNGrama(){
       }
       if(alocado){
         alocado = 0;
-        for(j=0; j<N; j++){
+        for(j=0; j<n; j++){
           inicio[j] = inicio[j+1];
         }
         inicio[j] = 0;
@@ -604,12 +602,23 @@ void criaNGrama(){
 }
 
 int main(int argc, char *argv[]){
-  nome_arq_stopwords = malloc(strlen(argv[1]));
-  strcpy(nome_arq_stopwords, argv[1]);
-  pegaStopwords();
+  int n;
+  int del_stopwords = atoi(argv[1]); //se 1 então deleta stopwords
+  int do_n_gram = atoi(argv[2]); //se 1 então segmenta em n-gramas
+  int inicio = 3;
+  if(do_n_gram){
+    n = atoi(argv[inicio]); //recebe n para passar como parâmetro para função que segmenta em n-gramas
+    inicio++;
+  }
+  if(del_stopwords){
+    nome_arq_stopwords = malloc(strlen(argv[inicio]));
+    strcpy(nome_arq_stopwords, argv[inicio]);
+    pegaStopwords();
+    inicio++;
+  } 
   int i;
   int qtd_palavras;
-  for(i = 2; i < argc; i++){
+  for(i = inicio; i < argc; i++){
     nome_review = malloc(strlen(argv[i]));
     strcpy(nome_review, argv[i]);
     segmentaFrases();
@@ -618,8 +627,8 @@ int main(int argc, char *argv[]){
     tokeniza();
     retiraEspacoAMais();
     qtd_palavras = contaQtdPalavras();
-    retiraStopwords();
-    criaNGrama();
+    if(del_stopwords) retiraStopwords();
+    if(do_n_gram) criaNGrama(n);
     free(nome_review);
   }
   return 0;
