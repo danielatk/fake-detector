@@ -116,25 +116,17 @@ for i in $(ls -d $path_dataset*/); do
 	done
 done
 
-echo "$pre_process"
-echo "----------------------------"
-echo "$stem"
-echo "----------------------------"
-echo "$feature_extract"
-echo "----------------------------"
-echo "$analise"
-
 #-----------execução-----------
 
-if [$do_pre_proc = 1]; then
+if (($do_pre_proc == 1)); then
 	$pre_process	#resolver problema de saida.txt
 fi
-if [$do_stemming = 1]; then
+if (($do_stemming == 1)); then
 	$stem	#resolver problema de saida.txt
 fi
-if [$do_analysis = 1]; then
+if (($do_analysis == 1)); then
 	$analise
 fi
-if [$do_feat_extract = 1]; then
+if (($do_feat_extract == 1)); then
 	$feature_extract
 fi

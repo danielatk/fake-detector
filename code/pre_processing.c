@@ -9,13 +9,7 @@ struct t_stopwords{ //struct para guardar as stopwords, quantidade de stopwords 
   char** list;
 };
 
-struct t_stopwords stopwords;
-FILE* review;
-FILE* f_stopwords;
-char* nome_review;
-char* nome_arq_stopwords;
-
-int contaQtdPalavras(){
+int contaQtdPalavras(char* nome_review, FILE* review){
   int qtd = 0;
   review = fopen(nome_review, "r");
   if (review == NULL){
@@ -34,7 +28,7 @@ int contaQtdPalavras(){
 }
 
 
-void segmentaFrases(){ //segmenta frases em linhas diferentes
+void segmentaFrases(char* nome_review, FILE* review){ //segmenta frases em linhas diferentes
   review = fopen(nome_review, "r");
   FILE* arq_saida;
   char* nome_arq_saida;
@@ -44,12 +38,11 @@ void segmentaFrases(){ //segmenta frases em linhas diferentes
   int cont_t = 0;
   for(j=0; j<=strlen(nome_review); j++){
     if(achou_ponto){
+      nome_arq_saida[j] = nome_review[j-1];
       if(nome_review[j-1] == 't') cont_t++;
       if(cont_t == 2){
-        nome_arq_saida[j] = nome_review[j-1];
         break;
       }
-      nome_arq_saida[j] = nome_review[j-1];
     }else{
       if(nome_review[j] == '.'){
         achou_ponto = 1;
@@ -161,14 +154,23 @@ void segmentaFrases(){ //segmenta frases em linhas diferentes
       }
     }
   }
+  fflush(stdout);
   remove(nome_review);
-  fclose(review);
+  /*printf("%s\n", nome_review);
+  printf("%s\n", nome_arq_saida);
+  printf("\n");
+  if(strcmp(nome_review, "/home/danielatk/Documents/Trabalho_RI/fake-detector/dataset/negative_polarity/deceptive_from_MTurk/fold1/d_hilton_1.txt") == 0){
+    exit(0);
+  }*/
+  fclose(review); //dá erro aqui no d_hilton_1.txt (d_hilton_19s.txt ainda existe)
   rename(nome_arq_saida, nome_review);
   free(nome_arq_saida);
+  nome_arq_saida = NULL;
   fclose(arq_saida);
+  arq_saida = NULL;
 }
 
-void retiraEspacoFim(){ //deleta espaço no fim de cada frase após segmentação
+void retiraEspacoFim(char* nome_review, FILE* review){ //deleta espaço no fim de cada frase após segmentação
   review = fopen(nome_review, "r");
   FILE* arq_saida;
   char* nome_arq_saida;
@@ -178,12 +180,11 @@ void retiraEspacoFim(){ //deleta espaço no fim de cada frase após segmentaçã
   int cont_t = 0;
   for(j=0; j<=strlen(nome_review); j++){
     if(achou_ponto){
+      nome_arq_saida[j] = nome_review[j-1];
       if(nome_review[j-1] == 't') cont_t++;
       if(cont_t == 2){
-        nome_arq_saida[j] = nome_review[j-1];
         break;
       }
-      nome_arq_saida[j] = nome_review[j-1];
     }else{
       if(nome_review[j] == '.'){
         achou_ponto = 1;
@@ -213,14 +214,17 @@ void retiraEspacoFim(){ //deleta espaço no fim de cada frase após segmentaçã
       }
     }
   }
+  fflush(stdout);
   remove(nome_review);
   fclose(review);
   rename(nome_arq_saida, nome_review);
   free(nome_arq_saida);
+  nome_arq_saida = NULL;
   fclose(arq_saida);
+  arq_saida = NULL;
 }
 
-void tokeniza(){ //quando tem uma ou mais pontuações sem espaço antes ou depois, por exemplo: "hello...you", não é possível cuidar desse caso, pois se não termos como "i.e." se tornariam "i e", emails também ficariam segmentados.
+void tokeniza(char* nome_review, FILE* review){ //quando tem uma ou mais pontuações sem espaço antes ou depois, por exemplo: "hello...you", não é possível cuidar desse caso, pois se não termos como "i.e." se tornariam "i e", emails também ficariam segmentados.
   review = fopen(nome_review, "r");
   FILE* arq_saida;
   char* nome_arq_saida;
@@ -230,12 +234,11 @@ void tokeniza(){ //quando tem uma ou mais pontuações sem espaço antes ou depo
   int cont_t = 0;
   for(j=0; j<=strlen(nome_review); j++){
     if(achou_ponto){
+      nome_arq_saida[j] = nome_review[j-1];
       if(nome_review[j-1] == 't') cont_t++;
       if(cont_t == 2){
-        nome_arq_saida[j] = nome_review[j-1];
         break;
       }
-      nome_arq_saida[j] = nome_review[j-1];
     }else{
       if(nome_review[j] == '.'){
         achou_ponto = 1;
@@ -282,14 +285,17 @@ void tokeniza(){ //quando tem uma ou mais pontuações sem espaço antes ou depo
       }
     }
   }
+  fflush(stdout);
   remove(nome_review);
   fclose(review);
   rename(nome_arq_saida, nome_review);
   free(nome_arq_saida);
+  nome_arq_saida = NULL;
   fclose(arq_saida);
+  arq_saida = NULL;
 }
 
-void retiraEspacoAMais(){
+void retiraEspacoAMais(char* nome_review, FILE* review){
   review = fopen(nome_review, "r");
   FILE* arq_saida;
   char* nome_arq_saida;
@@ -299,12 +305,11 @@ void retiraEspacoAMais(){
   int cont_t = 0;
   for(j=0; j<=strlen(nome_review); j++){
     if(achou_ponto){
+      nome_arq_saida[j] = nome_review[j-1];
       if(nome_review[j-1] == 't') cont_t++;
       if(cont_t == 2){
-        nome_arq_saida[j] = nome_review[j-1];
         break;
       }
-      nome_arq_saida[j] = nome_review[j-1];
     }else{
       if(nome_review[j] == '.'){
         achou_ponto = 1;
@@ -336,14 +341,17 @@ void retiraEspacoAMais(){
       }
     }
   }
+  fflush(stdout);
   remove(nome_review);
   fclose(review);
   rename(nome_arq_saida, nome_review);
   free(nome_arq_saida);
+  nome_arq_saida = NULL;
   fclose(arq_saida);
+  arq_saida = NULL;
 }
 
-void lowercase(){ 
+void lowercase(char* nome_review, FILE* review){ 
   review = fopen(nome_review, "r");
   FILE* arq_saida;
   char* nome_arq_saida;
@@ -353,12 +361,11 @@ void lowercase(){
   int cont_t = 0;
   for(j=0; j<=strlen(nome_review); j++){
     if(achou_ponto){
+      nome_arq_saida[j] = nome_review[j-1];
       if(nome_review[j-1] == 't') cont_t++;
       if(cont_t == 2){
-        nome_arq_saida[j] = nome_review[j-1];
         break;
       }
-      nome_arq_saida[j] = nome_review[j-1];
     }else{
       if(nome_review[j] == '.'){
         achou_ponto = 1;
@@ -385,15 +392,18 @@ void lowercase(){
       fprintf(arq_saida, "%c", aux[i]);
     }
   }
+  fflush(stdout);
   remove(nome_review);
   fclose(review);
   rename(nome_arq_saida, nome_review);
   free(nome_arq_saida);
+  nome_arq_saida = NULL;
   fclose(arq_saida);
+  arq_saida = NULL;
 }
 
 
-void pegaStopwords(){ //função para pegar as stopwords, quantidade de stopwords e stopword com maior tamanho
+void pegaStopwords(char* nome_arq_stopwords, FILE* f_stopwords, struct t_stopwords stopwords){ //função para pegar as stopwords, quantidade de stopwords e stopword com maior tamanho
   f_stopwords = fopen(nome_arq_stopwords, "r");
   if (f_stopwords == NULL){
     printf("Erro na abertura do arquivo %s\n", nome_arq_stopwords);
@@ -418,7 +428,7 @@ void pegaStopwords(){ //função para pegar as stopwords, quantidade de stopword
   fclose(f_stopwords);
 }
 
-void retiraStopwords(){
+void retiraStopwords(char* nome_review, FILE* review, struct t_stopwords stopwords){
   review = fopen(nome_review, "r");
   FILE* arq_saida;
   char* nome_arq_saida;
@@ -428,12 +438,11 @@ void retiraStopwords(){
   int cont_t = 0;
   for(j=0; j<=strlen(nome_review); j++){
     if(achou_ponto){
+      nome_arq_saida[j] = nome_review[j-1];
       if(nome_review[j-1] == 't') cont_t++;
       if(cont_t == 2){
-        nome_arq_saida[j] = nome_review[j-1];
         break;
       }
-      nome_arq_saida[j] = nome_review[j-1];
     }else{
       if(nome_review[j] == '.'){
         achou_ponto = 1;
@@ -500,14 +509,17 @@ void retiraStopwords(){
       }
     }
   }
+  fflush(stdout);
   remove(nome_review);
   fclose(review);
   rename(nome_arq_saida, nome_review);
   free(nome_arq_saida);
+  nome_arq_saida = NULL;
   fclose(arq_saida);
+  arq_saida = NULL;
 }
 
-void criaNGrama(int n){
+void criaNGrama(char* nome_review, FILE* review, int n){
   review = fopen(nome_review, "r");
   FILE* arq_saida;
   char* nome_arq_saida;
@@ -517,12 +529,11 @@ void criaNGrama(int n){
   int cont_t = 0;
   for(j=0; j<=strlen(nome_review); j++){
     if(achou_ponto){
+      nome_arq_saida[j] = nome_review[j-1];
       if(nome_review[j-1] == 't') cont_t++;
       if(cont_t == 2){
-        nome_arq_saida[j] = nome_review[j-1];
         break;
       }
-      nome_arq_saida[j] = nome_review[j-1];
     }else{
       if(nome_review[j] == '.'){
         achou_ponto = 1;
@@ -594,14 +605,22 @@ void criaNGrama(int n){
       }
     }
   }
+  fflush(stdout);
   remove(nome_review);
   fclose(review);
   rename(nome_arq_saida, nome_review);
   free(nome_arq_saida);
+  nome_arq_saida = NULL;
   fclose(arq_saida);
+  arq_saida = NULL;
 }
 
 int main(int argc, char *argv[]){
+  struct t_stopwords stopwords;
+  FILE* review;
+  FILE* f_stopwords;
+  char* nome_review;
+  char* nome_arq_stopwords;
   int n;
   int del_stopwords = atoi(argv[1]); //se 1 então deleta stopwords
   int do_n_gram = atoi(argv[2]); //se 1 então segmenta em n-gramas
@@ -611,25 +630,33 @@ int main(int argc, char *argv[]){
     inicio++;
   }
   if(del_stopwords){
-    nome_arq_stopwords = malloc(strlen(argv[inicio]));
+    nome_arq_stopwords = malloc(strlen(argv[inicio]) + 1);
     strcpy(nome_arq_stopwords, argv[inicio]);
-    pegaStopwords();
+    nome_arq_stopwords[strlen(argv[inicio]) + 1] = '\0';
+    pegaStopwords(nome_arq_stopwords, f_stopwords, stopwords);
     inicio++;
-  } 
+  }
   int i;
   int qtd_palavras;
   for(i = inicio; i < argc; i++){
-    nome_review = malloc(strlen(argv[i]));
+    nome_review = malloc(strlen(argv[i]) + 1);
     strcpy(nome_review, argv[i]);
-    segmentaFrases();
-    retiraEspacoFim();
-    lowercase();
-    tokeniza();
-    retiraEspacoAMais();
-    qtd_palavras = contaQtdPalavras();
-    if(del_stopwords) retiraStopwords();
-    if(do_n_gram) criaNGrama(n);
+    nome_review[strlen(argv[i]) + 1] = '\0';
+    printf("%s\n", nome_review);
+    segmentaFrases(nome_review, review); //quando chega em d_hilton_1.txt cria o d_hilton_1s.txt, deleta o d_hilton_1.txt
+    /*if(strcmp(nome_review, "/home/danielatk/Documents/Trabalho_RI/fake-detector/dataset/negative_polarity/deceptive_from_MTurk/fold1/d_hilton_19.txt") == 0){
+      break;
+    }*/
+    printf("%s\n", nome_review);
+    retiraEspacoFim(nome_review, review);
+    lowercase(nome_review, review);
+    tokeniza(nome_review, review);
+    retiraEspacoAMais(nome_review, review);
+    qtd_palavras = contaQtdPalavras(nome_review, review);
+    if(del_stopwords) retiraStopwords(nome_review, review, stopwords);
+    if(do_n_gram) criaNGrama(nome_review, review, n);
     free(nome_review);
+    nome_review = NULL;
   }
   return 0;
 }
